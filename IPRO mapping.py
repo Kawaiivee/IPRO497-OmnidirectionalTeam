@@ -54,9 +54,13 @@ for Fx in xAxis:
     for Fy in yAxis:
         #ratio of power:
         r = sqrt((Fx**2+Fy**2)/128**2)
+        if Fx == 0:
+            tan = 9999999 #when x = 0 tan is infi
+        else:
+            tan = abs(Fy/Fx)
         #on the edge
         if (Fx**2+Fy**2<=128**2 and Fx**2+Fy**2>=120**2):
-            if abs(Fy/Fx) > (1/sqrt(3)) and Fy > 0:
+            if tan > (1/sqrt(3)) and Fy > 0:
                 #Fc=0
                 Fa, Fb = sympy.symbols("Fa Fb", real=True)
                 eq1 = sympy.Eq((sqrt(3)*Fy-Fx)*Fb-(sqrt(3)*Fy+Fx)*Fa, 0)
@@ -118,8 +122,12 @@ for Fx in xAxis:
         #rounded number:
         rFx = int(round(Fx/r))
         rFy = int(round(Fy/r))
+        if Fx == 0:
+            tan = 9999999 #when x = 0 tan is infi
+        else:
+            tan = abs(Fy/Fx)
         if (Fx**2+Fy**2<120**2):
-            if abs(Fy/Fx) > (1/sqrt(3)) and Fy > 0:
+            if tan > (1/sqrt(3)) and Fy > 0:
                 #Fc=0
                 Fa, Fb = sympy.symbols("Fa Fb", real=True)
                 eq1 = sympy.Eq((sqrt(3)*Fy-Fx)*Fb-(sqrt(3)*Fy+Fx)*Fa, 0)
@@ -214,8 +222,12 @@ for Fx in xAxis:
     for Fy in yAxis:
         #ratio of power:
         r = sqrt((Fx**2+Fy**2)/128**2)
+        if Fx == 0:
+            tan = 9999999 #when x = 0 tan is infi
+        else:
+            tan = abs(Fy/Fx)
         if (Fx**2+Fy**2<=128**2):
-            if abs(Fy/Fx) > (1/sqrt(3)) and Fy > 0:
+            if  tan > (1/sqrt(3)) and Fy > 0:
                 #Fc=0
                 Fa, Fb = sympy.symbols("Fa Fb", real=True)
                 eq1 = sympy.Eq((sqrt(3)*Fy-Fx)*Fb-(sqrt(3)*Fy+Fx)*Fa, 0)
