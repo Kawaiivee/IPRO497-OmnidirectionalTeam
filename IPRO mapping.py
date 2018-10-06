@@ -215,7 +215,7 @@ for Fx in xAxis:
         #ratio of power:
         r = sqrt((Fx**2+Fy**2)/128**2)
         if (Fx**2+Fy**2<=128**2):
-            if Fy>64 and Fx>(-64*sqrt(3)) and Fx<(64*sqrt(3)):
+            if abs(Fy/Fx) > (1/sqrt(3)) and Fy > 0:
                 #Fc=0
                 Fa, Fb = sympy.symbols("Fa Fb", real=True)
                 eq1 = sympy.Eq((sqrt(3)*Fy-Fx)*Fb-(sqrt(3)*Fy+Fx)*Fa, 0)
@@ -228,7 +228,7 @@ for Fx in xAxis:
                 else:
                     print("No Positive")
                     noPositive = noPositive+1
-            if Fy<64 and Fx>-128 and Fx<0:
+            elif Fx<0:
                 #Fb=0
                 Fa, Fc = sympy.symbols("Fa Fc", real=True)
                 eq1 = sympy.Eq((sqrt(3)*Fy+Fx)*Fa-(2*Fx)*Fc, 0)
@@ -241,7 +241,7 @@ for Fx in xAxis:
                 else:
                     print("No Positive")
                     noPositive = noPositive+1
-            if Fy<64 and Fx>0 and Fx<128:
+            elif Fx>0:
                 #Fa=0
                 Fb, Fc = sympy.symbols("Fb Fc", real=True)
                 eq1 = sympy.Eq(-(sqrt(3)*Fy+Fx)*Fb-(2*Fx)*Fc, 0)
@@ -254,7 +254,7 @@ for Fx in xAxis:
                 else:
                     print("No Positive")
                     noPositive = noPositive+1
-            if Fy<64 and Fx == 0:
+            elif Fx == 0:
                 #Fa=0 Fb=0
                 Fc = sympy.symbols("Fc", real=True)
                 eq = sympy.Eq((Fc)**2, (r*maxSpeed)**2)
