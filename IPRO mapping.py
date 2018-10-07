@@ -52,8 +52,6 @@ n = 0
 k = 0
 for Fx in xAxis:
     for Fy in yAxis:
-        #ratio of power:
-        r = sqrt((Fx**2+Fy**2)/128**2)
         if Fx == 0:
             tan = 9999999 #when x = 0 tan is infi
         else:
@@ -116,102 +114,103 @@ for Fx in xAxis:
             print(k)
 for Fx in xAxis:
     for Fy in yAxis:
-        #ratio of power:
-        r = sqrt((Fx**2+Fy**2)/128**2)                   
-        #inside circle
-        #rounded number:
-        rFx = int(round(Fx/r))
-        rFy = int(round(Fy/r))
-        if Fx == 0:
-            tan = 9999999 #when x = 0 tan is infi
-        else:
-            tan = abs(Fy/Fx)
-        if (Fx**2+Fy**2<120**2):
-            if tan > (1/sqrt(3)) and Fy > 0:
-                #Fc=0
-                Fa, Fb = sympy.symbols("Fa Fb", real=True)
-                eq1 = sympy.Eq((sqrt(3)*Fy-Fx)*Fb-(sqrt(3)*Fy+Fx)*Fa, 0)
-                eq2 = sympy.Eq((0.5*Fb+0.5*Fa)**2+((sqrt(3)/2)*Fb-(sqrt(3)/2)*Fa)**2, maxSpeed**2)
-                sol=sympy.solve([eq1, eq2])
-                if sol[0][Fa] >0 and sol[0][Fb]>0:
-                    if (rFx, rFy) in dic:
-                        print("in dic")
-                        dic[(Fx,Fy)]= dic[(rFx,rFy)]
+        if Fx != 0 and Fy != 0:
+            #ratio of power:
+            r = sqrt((Fx**2+Fy**2)/128**2)                   
+            #inside circle
+            #rounded number:
+            rFx = int(round(Fx/r))
+            rFy = int(round(Fy/r))
+            if Fx == 0:
+                tan = 9999999 #when x = 0 tan is infi
+            else:
+                tan = abs(Fy/Fx)
+            if (Fx**2+Fy**2<120**2):
+                if tan > (1/sqrt(3)) and Fy > 0:
+                    #Fc=0
+                    Fa, Fb = sympy.symbols("Fa Fb", real=True)
+                    eq1 = sympy.Eq((sqrt(3)*Fy-Fx)*Fb-(sqrt(3)*Fy+Fx)*Fa, 0)
+                    eq2 = sympy.Eq((0.5*Fb+0.5*Fa)**2+((sqrt(3)/2)*Fb-(sqrt(3)/2)*Fa)**2, maxSpeed**2)
+                    sol=sympy.solve([eq1, eq2])
+                    if sol[0][Fa] >0 and sol[0][Fb]>0:
+                        if (rFx, rFy) in dic:
+                            print("in dic")
+                            dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        else:
+                            dic[(Fx,Fy)]= (sol[0][Fa],sol[0][Fb],0)
+                    elif sol[1][Fa] >0 and sol[1][Fb]>0:
+                        if (rFx, rFy) in dic:
+                            print("in dic")
+                            dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        else:
+                            dic[(Fx,Fy)]= (sol[1][Fa],sol[1][Fb],0)
                     else:
-                        dic[(Fx,Fy)]= (sol[0][Fa],sol[0][Fb],0)
-                elif sol[1][Fa] >0 and sol[1][Fb]>0:
-                    if (rFx, rFy) in dic:
-                        print("in dic")
-                        dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        print("No Positive")
+                        noPositive = noPositive+1
+                elif Fx<0:
+                    #Fb=0
+                    Fa, Fc = sympy.symbols("Fa Fc", real=True)
+                    eq1 = sympy.Eq((sqrt(3)*Fy+Fx)*Fa-(2*Fx)*Fc, 0)
+                    eq2 = sympy.Eq((0.5*Fa-Fc)**2+(-(sqrt(3)/2)*Fa)**2, maxSpeed**2)
+                    sol=sympy.solve([eq1, eq2])
+                    if sol[0][Fa] >0 and sol[0][Fc]>0:
+                        if (rFx, rFy) in dic:
+                            print("in dic")
+                            dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        else:
+                            dic[(Fx,Fy)]= (sol[0][Fa],sol[0][Fb])
+                    elif sol[1][Fa] >0 and sol[1][Fc]>0:
+                        if (rFx, rFy) in dic:
+                            print("in dic")
+                            dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        else:
+                            dic[(Fx,Fy)]= (sol[1][Fa],0,sol[1][Fc])
                     else:
-                        dic[(Fx,Fy)]= (sol[1][Fa],sol[1][Fb],0)
-                else:
-                    print("No Positive")
-                    noPositive = noPositive+1
-            elif Fx<0:
-                #Fb=0
-                Fa, Fc = sympy.symbols("Fa Fc", real=True)
-                eq1 = sympy.Eq((sqrt(3)*Fy+Fx)*Fa-(2*Fx)*Fc, 0)
-                eq2 = sympy.Eq((0.5*Fa-Fc)**2+(-(sqrt(3)/2)*Fa)**2, maxSpeed**2)
-                sol=sympy.solve([eq1, eq2])
-                if sol[0][Fa] >0 and sol[0][Fc]>0:
-                    if (rFx, rFy) in dic:
-                        print("in dic")
-                        dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        print("No Positive")
+                        noPositive = noPositive+1
+                elif Fx>0:
+                    #Fa=0
+                    Fb, Fc = sympy.symbols("Fb Fc", real=True)
+                    eq1 = sympy.Eq(-(sqrt(3)*Fy+Fx)*Fb-(2*Fx)*Fc, 0)
+                    eq2 = sympy.Eq((0.5*Fb-Fc)**2+((sqrt(3)/2)*Fb)**2, maxSpeed**2)
+                    sol=sympy.solve([eq1, eq2])
+                    if sol[0][Fc] >0 and sol[0][Fb]>0:
+                        if (rFx, rFy) in dic:
+                            print("in dic")
+                            dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        else:
+                            dic[(Fx,Fy)]= (0,sol[0][Fb],sol[0][Fc])
+                    elif sol[1][Fc] >0 and sol[1][Fb]>0:
+                        if (rFx, rFy) in dic:
+                            print("in dic")
+                            dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        else:
+                            dic[(Fx,Fy)]= (0,sol[1][Fb],sol[1][Fc])
                     else:
-                        dic[(Fx,Fy)]= (sol[0][Fa],sol[0][Fb])
-                elif sol[1][Fa] >0 and sol[1][Fc]>0:
-                    if (rFx, rFy) in dic:
-                        print("in dic")
-                        dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        print("No Positive")
+                        noPositive = noPositive+1
+                elif Fx == 0:
+                    #Fa=0 Fb=0
+                    Fc = sympy.symbols("Fc", real=True)
+                    eq = sympy.Eq((Fc)**2, maxSpeed**2)
+                    sol=sympy.solve(eq)
+                    if sol[0]>0:
+                        if (rFx, rFy) in dic:
+                            print("in dic")
+                            dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        else:
+                            dic[(Fx,Fy)]= (0,0,sol[0])
+                    elif sol[1]>0:
+                        if (rFx, rFy) in dic:
+                            print("in dic")
+                            dic[(Fx,Fy)]= dic[(rFx,rFy)]
+                        else:
+                            dic[(Fx,Fy)]= (0,0,sol[1])
                     else:
-                        dic[(Fx,Fy)]= (sol[1][Fa],0,sol[1][Fc])
-                else:
-                    print("No Positive")
-                    noPositive = noPositive+1
-            elif Fx>0:
-                #Fa=0
-                Fb, Fc = sympy.symbols("Fb Fc", real=True)
-                eq1 = sympy.Eq(-(sqrt(3)*Fy+Fx)*Fb-(2*Fx)*Fc, 0)
-                eq2 = sympy.Eq((0.5*Fb-Fc)**2+((sqrt(3)/2)*Fb)**2, maxSpeed**2)
-                sol=sympy.solve([eq1, eq2])
-                if sol[0][Fc] >0 and sol[0][Fb]>0:
-                    if (rFx, rFy) in dic:
-                        print("in dic")
-                        dic[(Fx,Fy)]= dic[(rFx,rFy)]
-                    else:
-                        dic[(Fx,Fy)]= (0,sol[0][Fb],sol[0][Fc])
-                elif sol[1][Fc] >0 and sol[1][Fb]>0:
-                    if (rFx, rFy) in dic:
-                        print("in dic")
-                        dic[(Fx,Fy)]= dic[(rFx,rFy)]
-                    else:
-                        dic[(Fx,Fy)]= (0,sol[1][Fb],sol[1][Fc])
-                else:
-                    print("No Positive")
-                    noPositive = noPositive+1
-            elif Fx == 0:
-                #Fa=0 Fb=0
-                Fc = sympy.symbols("Fc", real=True)
-                eq = sympy.Eq((Fc)**2, maxSpeed**2)
-                sol=sympy.solve(eq)
-                if sol[0]>0:
-                    if (rFx, rFy) in dic:
-                        print("in dic")
-                        dic[(Fx,Fy)]= dic[(rFx,rFy)]
-                    else:
-                        dic[(Fx,Fy)]= (0,0,sol[0])
-                elif sol[1]>0:
-                    if (rFx, rFy) in dic:
-                        print("in dic")
-                        dic[(Fx,Fy)]= dic[(rFx,rFy)]
-                    else:
-                        dic[(Fx,Fy)]= (0,0,sol[1])
-                else:
-                    print("No Positive")
-                    noPositive = noPositive+1
-        print(n)
-        n = n+1
+                        print("No Positive")
+                        noPositive = noPositive+1
+            print(n)
+            n = n+1
 print("Done")
 print("No Positive:" , noPositive)
 # In[84]:
