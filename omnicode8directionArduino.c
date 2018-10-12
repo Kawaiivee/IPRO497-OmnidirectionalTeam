@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 
 double radians(double x){
@@ -64,7 +63,7 @@ struct Tuple calc(int Fx, int Fy){
 }
 int main()
 {
-  struct Tuple temp = calc(-255,-255);
+  struct Tuple temp = calc(-255,-5);
   printf("%d,%d,%d\n", temp.a,temp.b,temp.c);
   return 0;
 }
