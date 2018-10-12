@@ -1,24 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-int main()
-{
-  int maxSpeed = 100;
-  return 0;
-}
+
 double radians(double x){
   return x*M_PI/180.0;
 }
 
 struct Tuple {
-    int a;
-    int b;
-    int c;
+    int a, b, c;
 };
 struct Tuple calc(int Fx, int Fy){
   struct Tuple result;
   int maxSpeed = 100;
-  float tang = abs(Fy/Fx);
+  float tang = fabs((float)Fy/(float)Fx);
   if (tang >= tan(radians(67.5)) && Fy >= 0){
     result.a = maxSpeed;
     result.b = maxSpeed;
@@ -67,4 +61,10 @@ struct Tuple calc(int Fx, int Fy){
     result.c = 0;
     return result;
   }
+}
+int main()
+{
+  struct Tuple temp = calc(-255,-255);
+  printf("%d,%d,%d\n", temp.a,temp.b,temp.c);
+  return 0;
 }
