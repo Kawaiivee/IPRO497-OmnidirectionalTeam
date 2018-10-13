@@ -75,13 +75,14 @@ def calc(Fx,Fy):
 
 def motion(event):
     x, y = event.x-128, event.y-128
-    y = -y
+    y = y
+    x = -x
     print('{}, {}'.format(x, y))
     aout, bout, cout = calc(x, y)
     c.coords(C, 128*multi, 128*multi, 128*multi, (128+cout)*multi)
     c.coords(A, 128*multi, 128*multi, (128-aout*sqrt(3)/2)*multi,(128-aout/2)*multi)
     c.coords(B, 128*multi, 128*multi, (128+bout*sqrt(3) / 2) * multi, (128 - bout / 2) * multi)
-    c.coords(Joined, 128 * multi, 128 * multi, (128+x)*multi, -(-128+y)*multi)
+    c.coords(Joined, 128 * multi, 128 * multi, (128-x)*multi, (128+y)*multi)
     gui.update()
     
 root.bind('<Motion>', motion)
