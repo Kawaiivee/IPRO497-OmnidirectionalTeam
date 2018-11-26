@@ -23,8 +23,8 @@ int CurrentSpeed;
 int Step = 10;
 
 
-#define ESC_HIGH_DEFAULT 200
-#define ESC_LOW_DEFAULT 20
+#define ESC_HIGH_DEFAULT 180
+#define ESC_LOW_DEFAULT 120
 
 void setup(){
   Serial.begin(9600);
