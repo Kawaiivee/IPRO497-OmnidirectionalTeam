@@ -20,7 +20,7 @@ ESCSettingsDef ESCSettings;
 #define NORMAL_MODE
 
 int CurrentSpeed;
-int Step = 10;
+int Step = 6;
 
 
 #define ESC_HIGH_DEFAULT 180
