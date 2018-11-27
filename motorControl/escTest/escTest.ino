@@ -1,8 +1,8 @@
 #include <Servo.h>
 
 Servo esc1;
-//Servo esc2;
-//Servo esc3;
+Servo esc2;
+Servo esc3;
 
 void setup() {
   esc1.attach(8);
@@ -10,9 +10,12 @@ void setup() {
   Serial.println("ESC attached!");
 }
 
-int pos;
-void loop() {
-  setSpeed1(100);
+int power;
+void loop(){
+  setSpeed1(20);
+  delay(3000);
+  setSpeed1(0);
+  delay(3000);
 }
 
 void setSpeed1(int speed){
@@ -20,12 +23,12 @@ void setSpeed1(int speed){
   esc1.write(angle);
 }
 
-//void setSpeed2(int speed){
-//  int angle = map(speed, 0, 100, 57, 150); //Sets servo positions to different speeds esc.write;
-//  esc2.write(angle);
-//}
+void setSpeed2(int speed){
+  int angle = map(speed, 0, 100, 57, 150); //Sets servo positions to different speeds esc.write;
+  esc2.write(angle);
+}
 
-//void setSpeed3(int speed){
-//  int angle = map(speed, 0, 100, 57, 150); //Sets servo positions to different speeds esc.write;
-//  esc3.write(angle);
-//}
+void setSpeed3(int speed){
+  int angle = map(speed, 0, 100, 57, 150); //Sets servo positions to different speeds esc.write;
+  esc3.write(angle);
+}
